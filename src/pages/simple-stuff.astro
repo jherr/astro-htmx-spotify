@@ -1,0 +1,16 @@
+---
+import Layout from "./layout.astro";
+import { Button } from "@/components/ui/button";
+---
+
+<Layout>  
+  <Button hx-on="click: document.getElementById('menu').style.display = 'block'">Show</Button>
+  <Button hx-on="click: document.getElementById('menu').style.display = 'none'">Hide</Button>
+
+  <Button _="on click show #menu">Show</Button>
+  <Button _="on click hide #menu">Hide</Button>
+  
+  <div id="menu">
+    Menu here
+  </div>
+</Layout>

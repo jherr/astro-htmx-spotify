@@ -1,0 +1,41 @@
+---
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle
+} from "@/components/ui/card";
+
+import { getAlbums } from "../lib/spotify";
+import type { Album } from "../lib/spotify";
+
+let albums:Album[] = [];
+if (Astro.request.method === "POST") {
+  try {
+    const data = await Astro.request.formData();
+    albums = await getAlbums(data.get("q") as string);
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(error.message);
+    }
+  }
+}
+export const partial = true;
+---
+
+<div class="flex flex-wrap mt-5" hx-boost="true">
+{albums.map(album => (
+  <a href={`/album/${album.id}`} class="w-1/3 p-2">
+    <Card>
+      <CardHeader>
+        <CardTitle transition:name="title">{album.name}</CardTitle>
+      </CardHeader>
+      <CardContent className="py-2">
+        <img src={album.images[0].url} class="w-full" transition:name="hero" />
+      </CardContent>
+    </Card>
+  </a>
+))}
+</div>

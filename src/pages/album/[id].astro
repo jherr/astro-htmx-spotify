@@ -1,0 +1,33 @@
+---
+import Layout from "../layout.astro";
+import { getAlbum } from "../../lib/spotify";
+
+const { id } = Astro.params;
+
+const info = await getAlbum(id!);
+---
+
+<Layout>
+  <div class="flex gap-2 items-center text-3xl mb-3">
+    <a href="/" class="font-light">Home</a>
+    <div transition:name="title" class="font-bold">
+      {info.name} by {info.artists[0].name}
+    </div>
+  </div>
+  <div class="flex">
+    <div class="w-1/3">
+      <img src={info.images[0].url} class="w-full" transition:name="hero" />
+    </div>
+    <div class="px-2 w-2/3">
+      <div class="flex flex-wrap gap-1">
+        {info.tracks.items.map((track) => (
+          <div class="mx-3">
+            <a href={track.external_urls.spotify} target="_blank">
+              {track.name}
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</Layout>

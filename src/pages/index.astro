@@ -1,0 +1,19 @@
+---
+import Layout from "./layout.astro";
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+---
+
+<Layout>
+	<form action="/songs" class="flex gap-2 items-center">
+		<Input
+			name="q"
+			type="search"
+			hx-trigger="keyup changed delay:500ms, search"
+			hx-post="/songs"
+			hx-target="#songs"
+		/>
+		<Button type="submit">Get Songs</Button>
+	</form>
+	<div id="songs"></div>
+</Layout>
